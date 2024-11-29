@@ -1,0 +1,23 @@
+volumes:
+  rabbitmq:
+  log:
+ 
+services:
+  rabbitmq:
+    image: rabbitmq:3.11.1-management
+    container_name: ${RABBITMQ_HOST:-rabbitmq_broker}
+    ports:
+      - ${RABBITMQ_PORT:-5672}:${RABBITMQ_PORT:-5672}
+      - 15672:15672
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_USER:-rabbitmq}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASSWORD:-rabbitmq}
+    volumes:
+      - rabbitmq:/var/lib/rabbitmq/
+      - log:/var/log/rabbitmq
+    networks:
+      - public
+
+networks:
+  public:
+    external: true

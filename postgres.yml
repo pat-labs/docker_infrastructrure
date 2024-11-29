@@ -1,0 +1,23 @@
+services:
+  postgres:
+    image: postgres
+    container_name: ${POSTGRES_HOST:-postgres_db}
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-postgres}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      PGDATA: /data/postgres
+    volumes:
+       - postgres:/data/postgres
+    ports:
+      - "${POSTGRES_PORT:-5432}:${POSTGRES_PORT:-5432}"
+    networks:
+      - public
+    restart: unless-stopped
+
+networks:
+  public:
+    external: true
+
+volumes:
+    postgres:

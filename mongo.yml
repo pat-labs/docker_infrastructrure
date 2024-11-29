@@ -1,0 +1,21 @@
+volumes:
+  mongo:
+
+services:
+  mongodb:
+    image: mongo:6.0
+    container_name: ${MONGO_HOST:-mongo_db}
+    restart: unless-stopped
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USER:-mongo}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD:-mongo}
+    ports:
+      - "${MONGO_PORT:-27017}:${MONGO_PORT:-27017}"
+    volumes:
+      - mongo:/data/db
+    networks:
+      - public
+
+networks:
+  public:
+    external: true
