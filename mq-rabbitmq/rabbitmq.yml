@@ -13,8 +13,8 @@ services:
       - RABBITMQ_DEFAULT_USER=${RABBITMQ_USER:-rabbitmq}
       - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASSWORD:-rabbitmq}
     volumes:
-      - rabbitmq:/var/lib/rabbitmq/
-      - log:/var/log/rabbitmq
+      - data:/var/lib/rabbitmq/
+      - data/log:/var/log/rabbitmq
     networks:
       - public
 

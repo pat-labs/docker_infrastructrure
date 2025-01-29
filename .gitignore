@@ -1,1 +1,3 @@
-portainer-data/
+**/data/**
+/acme.json
+/portainer-data

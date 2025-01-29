@@ -1,0 +1,28 @@
+services:
+  neo4j:
+    image: neo4j:latest
+    container_name: ${NEO4J_HOST:-neo4j_db}
+    volumes:
+        - data/logs:/logs
+        - data/config:/config
+        - data/data:/data
+        - data/plugin:/plugins
+    environment:
+        - NEO4J_dbms_active__database=${NEO4J_DB:-test}
+        - NEO4J_AUTH=${NEO4J_USER:-neo4j}/${NEO4J_PASSWORD:-your_password}
+        - NEO4J_server_databases_read__only=false
+        - NEO4J_apoc_export_file_enabled=true
+        - NEO4J_apoc_import_file_enabled=true
+        - NEO4J_apoc_import_file_use__neo4j__config=true
+        - NEO4J_dbms_security_procedures_unrestricted=apoc.*
+        - NEO4J_PLUGINS=["apoc", "graph-data-science"]
+    ports:
+      - "${NEO4J_PORT:-7474}:${NEO4J_PORT:-7474}"
+      - "7687:7687"
+    restart: always
+    networks:
+      - public
+
+networks:
+  public:
+    external: true
